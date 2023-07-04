@@ -5,6 +5,8 @@ const dotenv = require("dotenv");
 const app = express();
 dotenv.config();
 
+const PORT = process.env.PORT || 5000;
+
 const connect = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
@@ -14,7 +16,7 @@ const connect = async () => {
   }
 };
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server Listening at ${process.env.PORT}`);
-  connect()
+app.listen(PORT, () => {
+  console.log(`Server Listening at ${PORT}`);
+  connect();
 });
