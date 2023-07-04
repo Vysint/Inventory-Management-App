@@ -1,11 +1,26 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const cors = require("cookie-parser");
+
+const userRoutes = require("./routes/userRoute");
 
 const app = express();
 dotenv.config();
 
 const PORT = process.env.PORT || 5000;
+
+// Middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(cors());
+
+// Routes
+app.use("/api/users", userRoutes);
 
 const connect = async () => {
   try {
