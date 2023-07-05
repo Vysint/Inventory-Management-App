@@ -1,2 +1,2 @@
-# Inventory-Management-App
+# A Mern Inventory-Management-App
 Inventory-Management-App
