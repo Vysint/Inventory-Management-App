@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cookie-parser");
 
 const userRoutes = require("./routes/userRoute");
+const { errorHandler, notFound } = require("./middlewares/errorMiddleware");
 
 const app = express();
 dotenv.config();
@@ -21,6 +22,10 @@ app.use(cors());
 
 // Routes
 app.use("/api/users", userRoutes);
+
+// Error MIddlewares
+app.use(errorHandler);
+app.use(notFound);
 
 const connect = async () => {
   try {
