@@ -23,7 +23,7 @@ app.use(cors());
 // Routes
 app.use("/api/users", userRoutes);
 
-// Error MIddlewares
+// Error middlewares
 app.use(errorHandler);
 app.use(notFound);
 
