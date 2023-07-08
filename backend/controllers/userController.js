@@ -1,3 +1,4 @@
+const bcrypt = require("bcryptjs");
 const User = require("../models/userModel");
 const verifyToken = require("../utils/jwt");
 
@@ -51,6 +52,41 @@ exports.register = async (req, res, next) => {
       res.status(400);
       throw new Error("Invalid user data");
     }
+  } catch (err) {
+    return next(err);
+  }
+};
+
+// @desc   Login a  user
+// route   POST /api/users
+// @access Public
+
+exports.login = async (req, res, next) => {
+  const { email, password } = req.body;
+  // Validate request
+  try {
+    if (!email || !password) {
+      res.status(400);
+      throw new Error("Please add email and password");
+    }
+  } catch (err) {
+    return next(err);
+  }
+
+  // Check if user exists
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      res.status(400);
+      throw new Error("User not found, please register instead.");
+    }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      res.status(401);
+      throw new Error("Wrong Password");
+    }
+    verifyToken(res, user._id);
+    res.status(200).json({ _id: user._id, name: user.name, email: user.email });
   } catch (err) {
     return next(err);
   }
