@@ -1,4 +1,6 @@
 const User = require("../models/userModel");
+const verifyToken = require("../utils/jwt");
+
 // @desc   Register a new user
 // route   POST /api/users
 // @access Public
@@ -43,6 +45,7 @@ exports.register = async (req, res, next) => {
     });
     if (newUser) {
       const { _id, name, email, photo, phone, bio } = newUser;
+      verifyToken(res, _id);
       res.status(201).json({ _id, name, email, photo, phone, bio });
     } else {
       res.status(400);
