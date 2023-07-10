@@ -91,3 +91,9 @@ exports.login = async (req, res, next) => {
     return next(err);
   }
 };
+
+// @desc   Logout user
+// route   POST /api/users/logout
+// @access Public
+
+exports.logout = async (req, res, next) => {};
