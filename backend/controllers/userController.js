@@ -96,4 +96,10 @@ exports.login = async (req, res, next) => {
 // route   POST /api/users/logout
 // @access Public
 
-exports.logout = async (req, res, next) => {};
+exports.logout = async (req, res, next) => {
+  res.cookie("jwt", "", {
+    httpOnly: true,
+    expires: new Date(0),
+  });
+  res.status(200).json({ Message: "User logged out successfully" });
+};
