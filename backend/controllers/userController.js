@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/userModel");
 const verifyToken = require("../utils/jwt");
+const jwt = require("jsonwebtoken");
 
 // @desc   Register a new user
 // route   POST /api/users/register
@@ -112,16 +113,14 @@ exports.getUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
     if (user) {
-      res
-        .status(200)
-        .json({
-          _id: user._id,
-          name: user.name,
-          email: user.email,
-          photo: user.photo,
-          phone: user.phone,
-          bio: user.bio,
-        });
+      res.status(200).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        photo: user.photo,
+        phone: user.phone,
+        bio: user.bio,
+      });
     } else {
       res.status(401);
       throw new Error("User not found");
@@ -129,4 +128,22 @@ exports.getUser = async (req, res, next) => {
   } catch (err) {
     return next(err);
   }
+};
+
+// @desc   Get user Login Status
+// route   GET /api/users/loggedin
+// @access private
+
+exports.loginStatus = async (req, res, next) => {
+  const token = req.cookies.jwt;
+
+  if (!token) {
+    return res.json(false);
+  }
+  // Verify Token
+  const verified = jwt.verify(token, process.env.JWT_SECRET);
+  if (verified) {
+    return res.json(true);
+  }
+  return res.json(false);
 };
