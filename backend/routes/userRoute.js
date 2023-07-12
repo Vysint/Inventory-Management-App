@@ -21,6 +21,6 @@ router.get("/getuser", protect, getUser);
 
 router.get("/loggedin", loginStatus);
 
-router.put("/updateuser", protect, updateUserProfile);
+router.patch("/updateuser", protect, updateUserProfile);
 
 module.exports = router;
