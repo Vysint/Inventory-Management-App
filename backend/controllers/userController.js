@@ -179,3 +179,9 @@ exports.updateUserProfile = async (req, res, next) => {
     return next(err);
   }
 };
+
+// @desc   Change Password
+// route   PATCH /api/users/changepassword
+// @access private
+
+exports.changePassword = async (req, res, next) => {};
