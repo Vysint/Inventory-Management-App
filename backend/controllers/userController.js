@@ -147,3 +147,35 @@ exports.loginStatus = async (req, res, next) => {
   }
   return res.json(false);
 };
+
+// @desc   Update User
+// route   PATCH /api/users/updateuser
+// @access private
+exports.updateUserProfile = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (user) {
+      user.email = user.email;
+      user.name = req.body.name || user.name;
+      user.phone = req.body.phone || user.phone;
+      user.bio = req.body.bio || user.bio;
+      user.photo = req.body.photo || user.photo;
+
+      const updateUser = await user.save();
+
+      res.status(200).json({
+        _id: updateUser._id,
+        name: updateUser.name,
+        email: updateUser.email,
+        photo: updateUser.photo,
+        phone: updateUser.phone,
+        bio: updateUser.bio,
+      });
+    } else {
+      res.status(401);
+      throw new Error("User not found, please login");
+    }
+  } catch (err) {
+    return next(err);
+  }
+};
