@@ -184,4 +184,39 @@ exports.updateUserProfile = async (req, res, next) => {
 // route   PATCH /api/users/changepassword
 // @access private
 
-exports.changePassword = async (req, res, next) => {};
+exports.changePassword = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const { oldPassword, password } = req.body;
+    if (user) {
+      // Validate
+      if (!oldPassword || !password) {
+        res.status(400);
+        throw new Error("Please add old and new Password");
+      }
+
+      try {
+        // Check if old password matches in DB
+        const isPasswordValid = await bcrypt.compare(
+          oldPassword,
+          user.password
+        );
+        if (user && isPasswordValid) {
+          user.password = password;
+          await user.save();
+          res.status(200).send("Password change successful");
+        } else {
+          res.status(400);
+          throw new Error("Old password is incorrect");
+        }
+      } catch (err) {
+        return next(err);
+      }
+    } else {
+      res.status(400);
+      throw new Error("User not found, please sign in");
+    }
+  } catch (err) {
+    return next(err);
+  }
+};
