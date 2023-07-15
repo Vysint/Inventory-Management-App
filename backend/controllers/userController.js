@@ -220,3 +220,11 @@ exports.changePassword = async (req, res, next) => {
     return next(err);
   }
 };
+
+// @desc   Forgot Password
+// route   POST /api/users/forgotpassword
+// @access public
+
+exports.forgotPassword = async (req, res, next) => {
+  
+};
