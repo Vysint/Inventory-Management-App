@@ -204,7 +204,7 @@ exports.changePassword = async (req, res, next) => {
         if (user && isPasswordValid) {
           user.password = password;
           await user.save();
-          res.status(200).send("Password change successful");
+          res.status(200).send("Password change is successful");
         } else {
           res.status(400);
           throw new Error("Old password is incorrect");
