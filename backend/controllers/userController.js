@@ -223,7 +223,7 @@ exports.changePassword = async (req, res, next) => {
 
 // @desc   Forgot Password
 // route   POST /api/users/forgotpassword
-// @access private
+// @access public
 
 exports.forgotPassword = async (req, res, next) => {
   
