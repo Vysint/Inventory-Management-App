@@ -241,32 +241,34 @@ exports.forgotPassword = async (req, res, next) => {
         res.status(400);
         throw new Error(err);
       }
-      // create a reset token
+
+      // Create a reset token
       let resetToken = crypto.randomBytes(32).toString("hex") + user._id;
-      // Hash Token before saving to DB
-      let hashedToken = crypto
+      console.log(resetToken);
+
+      //Hash token before saving to DB
+      const hashedToken = crypto
         .createHash("sha256")
         .update(resetToken)
         .digest("hex");
 
-      // Save token to db
+      // Save Token to the DB
       await new Token({
         userId: user._id,
         token: hashedToken,
         createdAt: Date.now(),
-        expiresAt: Date.now() + 30 * (60 * 1000), //Thirty Minutes,
+        expiresAt: Date.now() + 30 * (60 * 1000), // 30 mins
       }).save();
 
-      // Construct  A reset URL
+      // Construct Reset Url
       const resetUrl = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
 
       // Reset Password Email
-
       const message = `
       <h2>Hello ${user.name}</h2>
       <p>You requested for a password reset</p>
       <p>Please use the link below to reset your password</p>
-      <p>This reset link is valid for only 30 minutes</p>
+      <p>This reset link if valid for only 30 minutes</p>
 
       <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
 
@@ -274,6 +276,8 @@ exports.forgotPassword = async (req, res, next) => {
 
       <p>Pinvent Team</p>
       `;
+
+      // Email Options
       const subject = "Password Reset Request";
       const send_to = user.email;
       const sent_from = process.env.EMAIL_USER;
@@ -288,6 +292,41 @@ exports.forgotPassword = async (req, res, next) => {
     } else {
       res.status(404);
       throw new Error("User does not exist");
+    }
+  } catch (err) {
+    return next(err);
+  }
+};
+
+
+exports.resetPassword = async (req, res, next) => {
+  const { password } = req.body;
+  const { resetToken } = req.params;
+
+  // Hash token, then compare to token in DB
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  // Find the token in the DB
+  try {
+    const userToken = await Token.findOne({
+      token: hashedToken,
+      expiresAt: { $gt: Date.now() },
+    });
+    if (userToken) {
+      // Find user
+      const user = await User.findOne({ _id: userToken.userId });
+      user.password = password;
+      await user.save();
+
+      res
+        .status(200)
+        .json({ message: "Password reset successful, please login" });
+    } else {
+      res.status(404);
+      throw new Error("Invalid or expired token");
     }
   } catch (err) {
     return next(err);
