@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cookie-parser");
 
 const userRoutes = require("./routes/userRoute");
+const productRoutes = require("./routes/productRoute.js");
 const { errorHandler, notFound } = require("./middlewares/errorMiddleware");
 
 const app = express();
@@ -22,7 +23,7 @@ app.use(cors());
 
 // Routes
 app.use("/api/users", userRoutes);
-
+app.use("/api/products", productRoutes);
 // Error middlewares
 app.use(errorHandler);
 app.use(notFound);
