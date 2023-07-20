@@ -1,4 +1,5 @@
 const Product = require("../models/productModel");
+const { fileSizeFormatter } = require("../utils/upload");
 
 // @desc   Create a product
 // route   POST /api/products
@@ -16,7 +17,20 @@ exports.createProduct = async (req, res, next) => {
     return next(err);
   }
 
-  // Manage image upload
+  // Handle image upload
+  let fileData = {};
+  try {
+    if (req.file) {
+      fileData = {
+        fileName: req.file.originalname,
+        filePath: req.file.path,
+        fileType: req.file.mimetype,
+        fileSize: fileSizeFormatter(req.file.size, 2),
+      };
+    }
+  } catch (er) {
+    return next(err);
+  }
 
   // create a product
   try {
@@ -28,6 +42,7 @@ exports.createProduct = async (req, res, next) => {
       quantity,
       price,
       description,
+      image: fileData,
     });
     res.status(201).json(product);
   } catch (err) {
