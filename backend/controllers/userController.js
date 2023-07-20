@@ -298,7 +298,6 @@ exports.forgotPassword = async (req, res, next) => {
   }
 };
 
-
 exports.resetPassword = async (req, res, next) => {
   const { password } = req.body;
   const { resetToken } = req.params;
