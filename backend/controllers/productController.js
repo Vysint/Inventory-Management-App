@@ -106,3 +106,25 @@ exports.getSingleProduct = async (req, res, next) => {
     return next(err);
   }
 };
+
+// @desc   Delete a  product
+// route   DELETE /api/products/:id
+// @access Private
+
+exports.deleteProduct = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const product = await Product.findById(id);
+    if (!product) {
+      res.status(404);
+      throw new Error("Product not found");
+    }
+    if (product.user.toString() !== req.user.id) {
+      res.status(401);
+      throw new Error("User not authorized");
+    }
+    res.status(200).json({ message: "Product deleted successfully" });
+  } catch (err) {
+    return next(err);
+  }
+};
