@@ -129,3 +129,81 @@ exports.deleteProduct = async (req, res, next) => {
     return next(err);
   }
 };
+
+// @desc   Update a  product
+// route   PATCH /api/products/:id
+// @access Private
+
+exports.updateProduct = async (req, res, next) => {
+  const { name, sku, category, quantity, price, description } = req.body;
+  const { id } = req.params;
+
+  try {
+    // Find the product by id
+    const product = await Product.findById(id);
+    if (product) {
+      // Match product to its user
+      if (product.user.toString() !== req.user.id) {
+        res.status(401);
+        throw new Error("User not authorized");
+      }
+
+      // Cloudinary configuration
+      cloudinary.config({
+        cloud_name: process.env.CLOUD_NAME,
+        api_key: process.env.CLOUD_KEY,
+        api_secret: process.env.CLOUD_KEY_SECRET,
+      });
+      // Handle image upload
+      let fileData = {};
+      try {
+        if (req.file) {
+          // Save image to cloudinary
+          let uploadedFile;
+          try {
+            uploadedFile = await cloudinary.uploader.upload(req.file.path, {
+              folder: "Pinvent App",
+              resource_type: "image",
+            });
+          } catch (err) {
+            // return next(err);
+            res.status(500);
+            throw new Error(err);
+          }
+          fileData = {
+            fileName: req.file.originalname,
+            filePath: uploadedFile.secure_url,
+            fileType: req.file.mimetype,
+            fileSize: fileSizeFormatter(req.file.size, 2),
+          };
+        }
+      } catch (err) {
+        return next(err);
+      }
+      const updatedProduct = await Product.findByIdAndUpdate(
+        { _id: id },
+        {
+          name,
+          category,
+          quantity,
+          price,
+          description,
+          image:
+            Object.keys(fileData).lengh === 0
+              ? product?.image
+              : fileData.filePath,
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+      res.status(200).json(updatedProduct);
+    } else {
+      res.status(404);
+      throw new Error("Product not found");
+    }
+  } catch (err) {
+    return next(err);
+  }
+};
