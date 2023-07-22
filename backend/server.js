@@ -8,6 +8,7 @@ const cors = require("cookie-parser");
 
 const userRoutes = require("./routes/userRoute");
 const productRoutes = require("./routes/productRoute.js");
+const contactRoutes = require("./routes/contactRoute");
 const { errorHandler, notFound } = require("./middlewares/errorMiddleware");
 
 const app = express();
@@ -27,6 +28,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // Routes
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/contact", contactRoutes);
 // Error middlewares
 app.use(errorHandler);
 app.use(notFound);
