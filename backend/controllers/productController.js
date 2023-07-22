@@ -123,6 +123,7 @@ exports.deleteProduct = async (req, res, next) => {
       res.status(401);
       throw new Error("User not authorized");
     }
+    await product.deleteOne();
     res.status(200).json({ message: "Product deleted successfully" });
   } catch (err) {
     return next(err);
