@@ -1,7 +1,6 @@
-const Product = require("../models/productModel");
-
 const cloudinary = require("cloudinary").v2;
 
+const Product = require("../models/productModel");
 const { fileSizeFormatter } = require("../utils/upload");
 
 // @desc   Create a product
@@ -148,12 +147,12 @@ exports.updateProduct = async (req, res, next) => {
         throw new Error("User not authorized");
       }
 
-      // Cloudinary configuration
-      cloudinary.config({
-        cloud_name: process.env.CLOUD_NAME,
-        api_key: process.env.CLOUD_KEY,
-        api_secret: process.env.CLOUD_KEY_SECRET,
-      });
+      // // Cloudinary configuration
+      // cloudinary.config({
+      //   cloud_name: process.env.CLOUD_NAME,
+      //   api_key: process.env.CLOUD_KEY,
+      //   api_secret: process.env.CLOUD_KEY_SECRET,
+      // });
       // Handle image upload
       let fileData = {};
       try {
