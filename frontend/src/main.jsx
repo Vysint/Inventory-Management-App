@@ -10,6 +10,7 @@ import {
   Route,
 } from "react-router-dom";
 import Home from "./pages/home/Home.jsx";
+import './index.css'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
