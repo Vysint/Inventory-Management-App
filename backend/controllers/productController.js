@@ -148,11 +148,11 @@ exports.updateProduct = async (req, res, next) => {
       }
 
       // // Cloudinary configuration
-      // cloudinary.config({
-      //   cloud_name: process.env.CLOUD_NAME,
-      //   api_key: process.env.CLOUD_KEY,
-      //   api_secret: process.env.CLOUD_KEY_SECRET,
-      // });
+      cloudinary.config({
+        cloud_name: process.env.CLOUD_NAME,
+        api_key: process.env.CLOUD_KEY,
+        api_secret: process.env.CLOUD_KEY_SECRET,
+      });
       // Handle image upload
       let fileData = {};
       try {
