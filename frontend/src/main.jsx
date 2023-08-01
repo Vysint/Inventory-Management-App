@@ -10,12 +10,20 @@ import {
   Route,
 } from "react-router-dom";
 import Home from "./pages/home/Home.jsx";
-import './index.css'
+import Login from "./pages/auth/Login.jsx";
+import Register from "./pages/auth/Register.jsx";
+import Forgot from "./pages/auth/Forgot.jsx";
+import Reset from "./pages/auth/Reset.jsx";
+import "./index.css";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/forgotpassword" element={<Forgot />} />
+      <Route path="/resetpassword/:resetToken" element={<Reset />} />
     </Route>
   )
 );
