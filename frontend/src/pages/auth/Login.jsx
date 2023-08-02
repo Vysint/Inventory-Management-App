@@ -20,10 +20,15 @@ const Login = () => {
               name="password"
               required
             />
-            <button type="submit" className="--btn --btn-primary --btn-block">
+            <button
+              type="submit"
+              className="--btn --btn-primary --btn-block"
+              style={{ marginBottom: "1rem" }}
+            >
               Login
             </button>
           </form>
+
           <Link to="/forgotpassword">Forgot Password</Link>
           <span className={styles.register}>
             <Link to="/">Home</Link>
