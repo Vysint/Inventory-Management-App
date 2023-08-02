@@ -14,7 +14,8 @@ import Login from "./pages/auth/Login.jsx";
 import Register from "./pages/auth/Register.jsx";
 import Forgot from "./pages/auth/Forgot.jsx";
 import Reset from "./pages/auth/Reset.jsx";
-import Sidebar from "./components/sidebar/Sidebar.jsx";
+import Sidebar from './components/sidebar/Sidebar.jsx'
+// import Sidebar from "./components/sidebar/Sidebar.js";
 import Dashboard from "./pages/dashboard/Dashboard.jsx";
 import Layout from "./components/layout/Layout.jsx";
 import "./index.css";
