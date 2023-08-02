@@ -5,11 +5,12 @@ import { FaTh, FaRegChartBar, FaCommentAlt } from "react-icons/fa";
 import { BiImageAdd } from "react-icons/bi";
 import SidebarItem from "./SidebarItem";
 import "./Sidebar.scss";
+import { useNavigate } from "react-router-dom";
 
 const menu = [
   {
     title: "Dashboard",
-    icon: <FaTh/>,
+    icon: <FaTh />,
     path: "/dashboard",
   },
   {
@@ -40,16 +41,25 @@ const menu = [
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
+  const navigate = useNavigate();
 
   const toggle = () => {
     setIsOpen(!isOpen);
+  };
+
+  const goHome = () => {
+    navigate("/");
   };
   return (
     <div className="layout">
       <div className="sidebar" style={{ width: isOpen ? "230px" : "60px" }}>
         <div className="top_section">
           <div className="logo" style={{ display: isOpen ? "block" : "none" }}>
-            <RiProductHuntLine size={35} style={{ cursor: "pointer" }} />
+            <RiProductHuntLine
+              size={35}
+              style={{ cursor: "pointer" }}
+              onClick={goHome}
+            />
           </div>
           <div
             className="bars"
