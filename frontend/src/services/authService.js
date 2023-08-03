@@ -16,7 +16,7 @@ export const registerUser = async (userData) => {
     return response.data;
   } catch (err) {
     const message =
-      (err.response && err.response.data && err.esponse.data.message) ||
+      (err.response && err.response.data && err.response.data.message) ||
       err.message ||
       err.toString();
     toast.error(message);
@@ -43,7 +43,7 @@ export const loginUser = async (userData) => {
     return response.data;
   } catch (err) {
     const message =
-      (err.response && err.response.data && err.esponse.data.message) ||
+      (err.response && err.response.data && err.response.data.message) ||
       err.message ||
       err.toString();
     toast.error(message);
@@ -57,7 +57,7 @@ export const logoutUser = async () => {
     await axios.get(`${BACKEND_URL}/api/users/logout`);
   } catch (err) {
     const message =
-      (err.response && err.response.data && err.esponse.data.message) ||
+      (err.response && err.response.data && err.response.data.message) ||
       err.message ||
       err.toString();
     toast.error(message);
@@ -72,6 +72,23 @@ export const forgotPassword = async (userData) => {
       userData
     );
     toast.success(response.data.message);
+  } catch (err) {
+    const message =
+      (err.response && err.response.data && err.response.data.message) ||
+      err.message ||
+      err.toString();
+    toast.error(message);
+  }
+};
+
+// Reset Password
+export const resetPassword = async (userData, resetToken) => {
+  try {
+    const response = await axios.put(
+      `${BACKEND_URL}/api/users/resetpassword/${resetToken}`,
+      userData
+    );
+    return response.data;
   } catch (err) {
     const message =
       (err.response && err.response.data && err.response.data.message) ||
