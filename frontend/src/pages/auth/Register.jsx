@@ -1,9 +1,56 @@
+import { useState } from "react";
 import { TiUserAddOutline } from "react-icons/ti";
 import Card from "../../components/card/Card";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { registerUser, validateEmail } from "../../services/authService";
 import styles from "./auth.module.scss";
 
+const initialState = {
+  name: "",
+  email: "",
+  password: "",
+  password2: "",
+};
 const Register = () => {
+  const [loading, setIsLoading] = useState(false);
+  const [userData, setUserData] = useState(initialState);
+
+  const handleInputChange = (e) => {
+    setUserData((userData) => ({
+      ...userData,
+      [e.target.name]: e.target.value,
+    }));
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!userData.name || !userData.email || !userData.password) {
+      return toast.error("All fields are required");
+    }
+    if (userData.password.length < 6) {
+      return toast.error("Password must be up to 6 characters");
+    }
+    if (userData.password !== userData.password2) {
+      return toast.error("Passwords do not match");
+    }
+    if (!validateEmail(userData.email)) {
+      return toast.error("Please enter a valid email");
+    }
+    const userInfo = {
+      name: userData.name,
+      email: userData.email,
+      password: userData.password,
+    };
+    setIsLoading(true);
+    try {
+      const data = await registerUser(userInfo);
+      console.log(data);
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+      console.log(err.message);
+    }
+  };
   return (
     <div className={`container ${styles.auth}`}>
       <Card>
@@ -12,19 +59,37 @@ const Register = () => {
             <TiUserAddOutline size={35} color="#999" />
           </div>
           <h2>Register</h2>
-          <form className="form">
-            <input type="text" placeholder="Name" name="name" required />
-            <input type="email" placeholder="Email" name="email" required />
+          <form className="form" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Name"
+              name="name"
+              value={userData.name}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              name="email"
+              value={userData.email}
+              onChange={handleInputChange}
+              required
+            />
             <input
               type="password"
               placeholder="Password"
               name="password"
+              value={userData.password}
+              onChange={handleInputChange}
               required
             />
             <input
               type="password"
               placeholder="Confirm Password"
-              name="password"
+              name="password2"
+              value={userData.password2}
+              onChange={handleInputChange}
               required
             />
             <button
