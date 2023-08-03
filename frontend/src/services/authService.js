@@ -49,3 +49,17 @@ export const loginUser = async (userData) => {
     toast.error(message);
   }
 };
+
+// Logout User
+
+export const logoutUser = async () => {
+  try {
+    await axios.get(`${BACKEND_URL}/api/users/logout`);
+  } catch (err) {
+    const message =
+      (err.response && err.response.data && err.esponse.data.message) ||
+      err.message ||
+      err.toString();
+    toast.error(message);
+  }
+};
