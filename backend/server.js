@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const cors = require("cookie-parser");
+const cors = require("cors");
 
 const userRoutes = require("./routes/userRoute");
 const productRoutes = require("./routes/productRoute.js");
