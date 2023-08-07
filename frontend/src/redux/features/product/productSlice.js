@@ -35,7 +35,7 @@ export const getProducts = createAsyncThunk(
   "products/getAll",
   async (_, thunkAPI) => {
     try {
-      return await getAllProducts(formData);
+      return await getAllProducts();
     } catch (err) {
       const message =
         (err.response && err.response.data && err.response.data.message) ||
