@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ProductForm from "../../components/productForm/ProductForm";
 import { useNavigate } from "react-router-dom";
@@ -51,7 +51,6 @@ const AddProduct = () => {
     formData.append("price", price);
     formData.append("description", description);
     formData.append("image", productImage);
-    console.log(...formData);
 
     try {
       await dispatch(createProduct(formData));
