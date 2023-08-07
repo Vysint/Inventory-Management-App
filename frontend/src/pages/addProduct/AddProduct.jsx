@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import ProductForm from "../../components/productForm/ProductForm";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { createProduct } from "../../redux/features/product/productSlice";
 import Loader from "../../components/loader/Loader";
+import ProductForm from "../../components/product/productForm/ProductForm";
 
 const initialState = {
   name: "",
