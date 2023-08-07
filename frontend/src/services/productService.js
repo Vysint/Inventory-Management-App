@@ -9,3 +9,9 @@ export const createNewProduct = async (formData) => {
   const response = await axios.post(API_URL, formData);
   return response.data;
 };
+
+// Get all Products
+export const getAllProducts = async () => {
+  const response = await axios.get(API_URL);
+  return response.data;
+};
