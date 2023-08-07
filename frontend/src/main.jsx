@@ -19,6 +19,7 @@ import Sidebar from './components/sidebar/Sidebar.jsx'
 import Dashboard from "./pages/dashboard/Dashboard.jsx";
 import Layout from "./components/layout/Layout.jsx";
 import "./index.css";
+import AddProduct from "./pages/addProduct/AddProduct.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,6 +35,16 @@ const router = createBrowserRouter(
           <Sidebar>
             <Layout>
               <Dashboard />
+            </Layout>
+          </Sidebar>
+        }
+      ></Route>
+      <Route
+        path="/add-product"
+        element={
+          <Sidebar>
+            <Layout>
+              <AddProduct />
             </Layout>
           </Sidebar>
         }
