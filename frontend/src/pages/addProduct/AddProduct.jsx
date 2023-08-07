@@ -4,6 +4,7 @@ import ProductForm from "../../components/productForm/ProductForm";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { createProduct } from "../../redux/features/product/productSlice";
+import Loader from "../../components/loader/Loader";
 
 const initialState = {
   name: "",
@@ -62,6 +63,7 @@ const AddProduct = () => {
 
   return (
     <>
+      {isLoading && <Loader />}
       <h3 className="--mt">Add New Product</h3>
       <ProductForm
         product={product}
