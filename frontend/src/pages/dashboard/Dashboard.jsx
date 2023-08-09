@@ -3,6 +3,7 @@ import useRedirect from "../../customHook/useRedirect";
 import { useEffect } from "react";
 import { getProducts } from "../../redux/features/product/productSlice";
 import ProductList from "../../components/product/productList/ProductList";
+import ProductSummary from "../../components/product/productSummary/ProductSummary";
 
 const Dashboard = () => {
   useRedirect("/login");
@@ -22,7 +23,7 @@ const Dashboard = () => {
   }, [isLoggedIn, isError, message, dispatch]);
   return (
     <div>
-      <h2>Dashboard</h2>
+      <ProductSummary products={products} />
       <ProductList products={products} isLoading={isLoading} />
     </div>
   );
