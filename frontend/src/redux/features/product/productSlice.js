@@ -3,6 +3,7 @@ import {
   createNewProduct,
   deleteProductById,
   getAllProducts,
+  updateProductById,
 } from "../../../services/productService";
 import { toast } from "react-toastify";
 
@@ -29,7 +30,6 @@ export const createProduct = createAsyncThunk(
         (err.response && err.response.data && err.response.data.message) ||
         err.message ||
         err.toString();
-      console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -45,7 +45,6 @@ export const getProducts = createAsyncThunk(
         (err.response && err.response.data && err.response.data.message) ||
         err.message ||
         err.toString();
-      console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -62,7 +61,21 @@ export const deleteProduct = createAsyncThunk(
         (err.response && err.response.data && err.response.data.message) ||
         err.message ||
         err.toString();
-      console.log(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+// Update product
+export const updateProduct = createAsyncThunk(
+  "products/updateProduct",
+  async ({ id, formData }, thunkAPI) => {
+    try {
+      return await updateProductById(id, formData);
+    } catch (err) {
+      const message =
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString();
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -165,6 +178,21 @@ const productSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+      })
+      .addCase(updateProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSucccess = true;
+        state.isError = false;
+        toast.success("Product updated successfully");
+      })
+      .addCase(updateProduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        toast.error(action.payload);
       });
   },
 });
