@@ -35,21 +35,6 @@ export const createProduct = createAsyncThunk(
     }
   }
 );
-// Get a product
-export const getProduct = createAsyncThunk(
-  "products/get",
-  async (id, thunkAPI) => {
-    try {
-      return await getProductById(id);
-    } catch (err) {
-      const message =
-        (err.response && err.response.data && err.response.data.message) ||
-        err.message ||
-        err.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
 
 // Get All Products
 export const getProducts = createAsyncThunk(
@@ -73,6 +58,21 @@ export const deleteProduct = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       return await deleteProductById(id);
+    } catch (err) {
+      const message =
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+// Get a product
+export const getProduct = createAsyncThunk(
+  "products/getProduct",
+  async (id, thunkAPI) => {
+    try {
+      return await getProductById(id);
     } catch (err) {
       const message =
         (err.response && err.response.data && err.response.data.message) ||
