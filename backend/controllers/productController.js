@@ -62,7 +62,7 @@ exports.createProduct = async (req, res, next) => {
       quantity,
       price,
       description,
-      image: fileData.filePath,
+      image: fileData,
     });
     res.status(201).json(product);
   } catch (err) {
