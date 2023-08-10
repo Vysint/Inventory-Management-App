@@ -7,6 +7,7 @@ import InfoBox from "../../infoBox/InfoBox";
 import {
   CALC_OUT_OF_STOCK,
   CALC_STORE_VALUE,
+  CALC_CATEGORY,
 } from "../../../redux/features/product/productSlice";
 import "./ProductSummary.scss";
 
@@ -23,11 +24,13 @@ export const formatNumbers = (x) => {
 const ProductSummary = ({ products }) => {
   const { totalStoreValue } = useSelector((state) => state.product);
   const { outOfStock } = useSelector((state) => state.product);
+  const { category } = useSelector((state) => state.product);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(CALC_STORE_VALUE(products));
     dispatch(CALC_OUT_OF_STOCK(products));
+    dispatch(CALC_CATEGORY(products));
   }, [dispatch, products]);
   return (
     <div className="product-summary">
@@ -54,7 +57,7 @@ const ProductSummary = ({ products }) => {
         <InfoBox
           icon={categoryIcon}
           title={"All Categories"}
-          count={"0"}
+          count={category.length}
           bgColor="card4"
         />
       </div>
