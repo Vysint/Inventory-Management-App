@@ -5,7 +5,14 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { AiOutlineEye } from "react-icons/ai";
 import Search from "../../search/Search";
 import { setFilteredProducts } from "../../../redux/features/product/filterSlice";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import { toast } from "react-toastify";
 import ReactPaginate from "react-paginate";
+import {
+  deleteProduct,
+  getProducts,
+} from "../../../redux/features/product/productSlice";
 import "./ProductList.scss";
 
 const ProductList = ({ products, isLoading }) => {
@@ -22,6 +29,31 @@ const ProductList = ({ products, isLoading }) => {
     return text;
   };
 
+  // Delete product
+  const productDelete = async (id) => {
+    try {
+      await dispatch(deleteProduct(id));
+      await dispatch(getProducts());
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
+  //confirm Delete Alert
+  const confirmDelete = (id) => {
+    confirmAlert({
+      title: "Delete Product",
+      message: "Are you sure you want to delete this product?",
+      buttons: [
+        {
+          label: "Delete",
+          onClick: () => productDelete(id),
+        },
+        {
+          label: "Cancel",
+        },
+      ],
+    });
+  };
   // Begin Pagination
   const [itemOffset, setItemOffset] = useState(0);
 
@@ -98,7 +130,11 @@ const ProductList = ({ products, isLoading }) => {
                           <FaEdit size={20} color={"green"} />
                         </span>
                         <span>
-                          <FaTrashAlt size={20} color={"red"} />
+                          <FaTrashAlt
+                            size={20}
+                            color={"red"}
+                            onClick={() => confirmDelete(_id)}
+                          />
                         </span>
                       </td>
                     </tr>
