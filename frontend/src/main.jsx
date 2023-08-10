@@ -15,12 +15,12 @@ import Register from "./pages/auth/Register.jsx";
 import Forgot from "./pages/auth/Forgot.jsx";
 import Reset from "./pages/auth/Reset.jsx";
 import Sidebar from "./components/sidebar/Sidebar.jsx";
-// import Sidebar from "./components/sidebar/Sidebar.js";
 import Dashboard from "./pages/dashboard/Dashboard.jsx";
 import Layout from "./components/layout/Layout.jsx";
-import "./index.css";
 import AddProduct from "./pages/addProduct/AddProduct.jsx";
 import ProductDetail from "./components/product/productDetail/ProductDetail.jsx";
+import EditProduct from "./pages/editProduct/EditProduct.jsx";
+import "./index.css";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -60,6 +60,11 @@ const router = createBrowserRouter(
           </Sidebar>
         }
       />
+      <Route path="/edit-product/:id" element={<Sidebar>
+        <Layout>
+          <EditProduct/>
+        </Layout>
+      </Sidebar>} />
     </Route>
   )
 );
