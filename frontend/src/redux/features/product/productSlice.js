@@ -3,6 +3,7 @@ import {
   createNewProduct,
   deleteProductById,
   getAllProducts,
+  getProductById,
   updateProductById,
 } from "../../../services/productService";
 import { toast } from "react-toastify";
@@ -34,6 +35,22 @@ export const createProduct = createAsyncThunk(
     }
   }
 );
+// Get a product
+export const getProduct = createAsyncThunk(
+  "products/get",
+  async (id, thunkAPI) => {
+    try {
+      return await getProductById(id);
+    } catch (err) {
+      const message =
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Get All Products
 export const getProducts = createAsyncThunk(
   "products/getAll",
@@ -189,6 +206,21 @@ const productSlice = createSlice({
         toast.success("Product updated successfully");
       })
       .addCase(updateProduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        toast.error(action.payload);
+      })
+      .addCase(getProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getProduct.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSucccess = true;
+        state.isError = false;
+        state.product = action.payload;
+      })
+      .addCase(getProduct.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
