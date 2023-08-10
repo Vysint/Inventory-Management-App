@@ -4,7 +4,10 @@ import { AiFillDollarCircle } from "react-icons/ai";
 import { BsCart4, BsCartX } from "react-icons/bs";
 import { BiCategory } from "react-icons/bi";
 import InfoBox from "../../infoBox/InfoBox";
-import { CALC_STORE_VALUE } from "../../../redux/features/product/productSlice";
+import {
+  CALC_OUT_OF_STOCK,
+  CALC_STORE_VALUE,
+} from "../../../redux/features/product/productSlice";
 import "./ProductSummary.scss";
 
 // Icons
@@ -19,10 +22,12 @@ export const formatNumbers = (x) => {
 };
 const ProductSummary = ({ products }) => {
   const { totalStoreValue } = useSelector((state) => state.product);
+  const { outOfStock } = useSelector((state) => state.product);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(CALC_STORE_VALUE(products));
+    dispatch(CALC_OUT_OF_STOCK(products));
   }, [dispatch, products]);
   return (
     <div className="product-summary">
@@ -43,7 +48,7 @@ const ProductSummary = ({ products }) => {
         <InfoBox
           icon={outOfStockIcon}
           title={"Out of Stock"}
-          count={"0"}
+          count={outOfStock}
           bgColor="card3"
         />
         <InfoBox
