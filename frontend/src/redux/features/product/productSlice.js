@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   createNewProduct,
+  deleteProductById,
   getAllProducts,
 } from "../../../services/productService";
 import { toast } from "react-toastify";
@@ -39,6 +40,23 @@ export const getProducts = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       return await getAllProducts();
+    } catch (err) {
+      const message =
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString();
+      console.log(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Delete product
+export const deleteProduct = createAsyncThunk(
+  "products/delete",
+  async (id, thunkAPI) => {
+    try {
+      return await deleteProductById(id);
     } catch (err) {
       const message =
         (err.response && err.response.data && err.response.data.message) ||
@@ -133,10 +151,25 @@ const productSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         toast.error(action.payload);
+      })
+      .addCase(deleteProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSucccess = true;
+        state.isError = false;
+        toast.success("Product deleted successfully");
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
       });
   },
 });
 
-export const { CALC_STORE_VALUE, CALC_OUT_OF_STOCK, CALC_CATEGORY } = productSlice.actions;
+export const { CALC_STORE_VALUE, CALC_OUT_OF_STOCK, CALC_CATEGORY } =
+  productSlice.actions;
 
 export default productSlice.reducer;
