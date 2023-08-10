@@ -70,6 +70,24 @@ const productSlice = createSlice({
         totalStoreValue: totalValue,
       };
     },
+    CALC_OUT_OF_STOCK: (state, action) => {
+      const products = action.payload;
+      const array = [];
+      products.map((item) => {
+        const { quantity } = item;
+        return array.push(quantity);
+      });
+      let count = 0;
+      array.forEach((number) => {
+        if (number === 0 || number === "0") {
+          count += 1;
+        }
+      });
+      return {
+        ...state,
+        outOfStock: count,
+      };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -106,6 +124,6 @@ const productSlice = createSlice({
   },
 });
 
-export const { CALC_STORE_VALUE } = productSlice.actions;
+export const { CALC_STORE_VALUE, CALC_OUT_OF_STOCK } = productSlice.actions;
 
 export default productSlice.reducer;
