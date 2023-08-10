@@ -28,3 +28,8 @@ export const updateProductById = async (id, formData) => {
   const response = await axios.patch(`${API_URL}/${id}`, formData);
   return response.data;
 };
+// Get a single Product
+export const getProductById = async (id) => {
+  const response = await axios.get(`${API_URL}/${id}`);
+  return response.data;
+};
