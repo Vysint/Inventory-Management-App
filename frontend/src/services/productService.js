@@ -23,3 +23,8 @@ export const deleteProductById = async (id) => {
 };
 
 // Update a Product
+
+export const updateProductById = async (id, formData) => {
+  const response = await axios.patch(`${API_URL}/${id}`, formData);
+  return response.data;
+};
