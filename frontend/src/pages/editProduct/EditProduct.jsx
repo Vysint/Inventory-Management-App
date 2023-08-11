@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   getProduct,
+  getProducts,
   updateProduct,
 } from "../../redux/features/product/productSlice";
-import { getAllProducts } from "../../services/productService";
 import ProductForm from "../../components/product/productForm/ProductForm";
 import Loader from "../../components/loader/Loader";
 import { toast } from "react-toastify";
@@ -27,7 +27,7 @@ const EditProduct = () => {
     dispatch(getProduct(id));
   }, [dispatch, id]);
 
-  useEffect(() => {
+useEffect(() => {
     setProduct(productEdit);
     setImagePreview(
       productEdit && productEdit.image ? `${productEdit.image}` : null
@@ -59,7 +59,7 @@ const EditProduct = () => {
     }
 
     await dispatch(updateProduct({ id, formData }));
-    await dispatch(getAllProducts());
+    await dispatch(getProducts());
     navigate("/dashboard");
   };
   return (
