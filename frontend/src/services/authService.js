@@ -110,3 +110,16 @@ export const loginStatus = async (e) => {
     toast.error(message);
   }
 };
+
+// Get user Profile
+export const getUserProfile = async () => {
+  try {
+    const response = await axios.get(`${BACKEND_URL}/api/users/profile`);
+    return response.data;
+  } catch (err) {
+    (err.response && err.response.data && err.response.data.message) ||
+      err.message ||
+      err.toString();
+    toast.error(message);
+  }
+};
