@@ -20,7 +20,7 @@ router.post("/login", login);
 
 router.get("/logout", logout);
 
-router.get("/getuser", protect, getUser);
+router.get("/profile", protect, getUser);
 
 router.get("/loggedin", loginStatus);
 
