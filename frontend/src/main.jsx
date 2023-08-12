@@ -21,6 +21,7 @@ import AddProduct from "./pages/addProduct/AddProduct.jsx";
 import ProductDetail from "./components/product/productDetail/ProductDetail.jsx";
 import EditProduct from "./pages/editProduct/EditProduct.jsx";
 import "./index.css";
+import Profile from "./pages/profile/Profile.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -60,11 +61,26 @@ const router = createBrowserRouter(
           </Sidebar>
         }
       />
-      <Route path="/edit-product/:id" element={<Sidebar>
-        <Layout>
-          <EditProduct/>
-        </Layout>
-      </Sidebar>} />
+      <Route
+        path="/edit-product/:id"
+        element={
+          <Sidebar>
+            <Layout>
+              <EditProduct />
+            </Layout>
+          </Sidebar>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <Sidebar>
+            <Layout>
+              <Profile />
+            </Layout>
+          </Sidebar>
+        }
+      />
     </Route>
   )
 );
