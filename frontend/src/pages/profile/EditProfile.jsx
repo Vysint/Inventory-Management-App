@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Loader from "../../components/loader/Loader";
 import Card from "../../components/card/Card";
 import "./Profile.scss";
 
 const EditProfile = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
+  const { email } = user;
+
+  useEffect(() => {
+    if (!email) {
+      navigate("/profile");
+    }
+  }, [email, navigate]);
 
   const initialState = {
     name: user?.name,
@@ -76,9 +84,9 @@ const EditProfile = () => {
                 name="bio"
                 value={profile?.bio}
                 onChange={handleInputChange}
-                cols="30" rows="10"
+                cols="30"
+                rows="10"
               ></textarea>
-              
             </p>
             <p>
               <label>Photo</label>
