@@ -123,3 +123,20 @@ export const getUserProfile = async () => {
     toast.error(message);
   }
 };
+
+// Update user Profile
+export const updateUserProfile = async (userData) => {
+  try {
+    const response = await axios.patch(
+      `${BACKEND_URL}/api/users/updateuser`,
+      userData
+    );
+    return response.data;
+  } catch (err) {
+    const message =
+      (err.response && err.response.data && err.response.data.message) ||
+      err.message ||
+      err.toString();
+    toast.error(message);
+  }
+};
