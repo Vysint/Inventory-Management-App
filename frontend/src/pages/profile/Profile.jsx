@@ -58,7 +58,12 @@ const Profile = () => {
               </p>
               <div>
                 <Link to="/edit-profile">
-                  <button className="--btn --btn-primary" style={{marginTop:"1rem"}}>Edit Profile</button>
+                  <button
+                    className="--btn --btn-primary"
+                    style={{ marginTop: "1rem" }}
+                  >
+                    Edit Profile
+                  </button>
                 </Link>
               </div>
             </span>
