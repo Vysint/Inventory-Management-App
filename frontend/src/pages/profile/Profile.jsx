@@ -35,7 +35,7 @@ const Profile = () => {
         {!isLoading && profile === null ? (
           <p>Something went wrong, please reload the page</p>
         ) : (
-          <Card cardClass={"card --flex-direction-column"}>
+          <Card cardClass={"card --flex-dir-column"}>
             <span className="profile-photo">
               <img src={profile?.photo} alt="Profile Pic" />
             </span>
@@ -58,7 +58,7 @@ const Profile = () => {
               </p>
               <div>
                 <Link to="/edit-profile">
-                  <button className="--btn --btn-primary">Edit Profile</button>
+                  <button className="--btn --btn-primary" style={{marginTop:"1rem"}}>Edit Profile</button>
                 </Link>
               </div>
             </span>
