@@ -22,6 +22,7 @@ import ProductDetail from "./components/product/productDetail/ProductDetail.jsx"
 import EditProduct from "./pages/editProduct/EditProduct.jsx";
 import "./index.css";
 import Profile from "./pages/profile/Profile.jsx";
+import EditProfile from "./pages/profile/EditProfile.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -77,6 +78,16 @@ const router = createBrowserRouter(
           <Sidebar>
             <Layout>
               <Profile />
+            </Layout>
+          </Sidebar>
+        }
+      />
+      <Route
+        path="/edit-profile"
+        element={
+          <Sidebar>
+            <Layout>
+              <EditProfile />
             </Layout>
           </Sidebar>
         }
