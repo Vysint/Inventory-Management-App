@@ -33,7 +33,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // Routes
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
-app.use("/api/contact", contactRoutes);
+app.use("/api/contact_us", contactRoutes);
 // Error middlewares
 app.use(errorHandler);
 app.use(notFound);
