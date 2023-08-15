@@ -20,9 +20,10 @@ import Layout from "./components/layout/Layout.jsx";
 import AddProduct from "./pages/addProduct/AddProduct.jsx";
 import ProductDetail from "./components/product/productDetail/ProductDetail.jsx";
 import EditProduct from "./pages/editProduct/EditProduct.jsx";
-import "./index.css";
 import Profile from "./pages/profile/Profile.jsx";
 import EditProfile from "./pages/profile/EditProfile.jsx";
+import Contact from "./pages/contact/Contact.jsx";
+import "./index.css";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -88,6 +89,16 @@ const router = createBrowserRouter(
           <Sidebar>
             <Layout>
               <EditProfile />
+            </Layout>
+          </Sidebar>
+        }
+      />
+      <Route
+        path="/contact"
+        element={
+          <Sidebar>
+            <Layout>
+              <Contact/>
             </Layout>
           </Sidebar>
         }
