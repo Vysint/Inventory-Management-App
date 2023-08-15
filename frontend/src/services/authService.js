@@ -140,3 +140,20 @@ export const updateUserProfile = async (userData) => {
     toast.error(message);
   }
 };
+
+// Change password
+export const changePassword = async (userData) => {
+  try {
+    const response = await axios.patch(
+      `${BACKEND_URL}/api/users/changepassword`,
+      userData
+    );
+    return response.data;
+  } catch (err) {
+    const message =
+      (err.response && err.response.data && err.response.data.message) ||
+      err.message ||
+      err.toString();
+    toast.error(message);
+  }
+};
