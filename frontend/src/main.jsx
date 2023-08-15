@@ -94,7 +94,7 @@ const router = createBrowserRouter(
         }
       />
       <Route
-        path="/contact"
+        path="/contact_us"
         element={
           <Sidebar>
             <Layout>
