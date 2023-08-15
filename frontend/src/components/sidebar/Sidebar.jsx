@@ -35,7 +35,7 @@ const menu = [
   {
     title: "Report Bug",
     icon: <FaCommentAlt />,
-    path: "/contact-us",
+    path: "/contact_us",
   },
 ];
 
