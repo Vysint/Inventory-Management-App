@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const BACKEND_URL = import.meta.env.VITE_REACT_API_URL;
+export const BACKEND_URL = import.meta.env.VITE_REACT_API_URL;
 
 // Register user
 export const registerUser = async (userData) => {
