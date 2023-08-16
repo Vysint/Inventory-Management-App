@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { MdPassword } from "react-icons/md";
+import { toast } from "react-toastify";
 import Card from "../card/Card";
 import { changePassword } from "../../services/authService";
-import "./ChangePassword.scss";
+import styles from "../../pages/auth/auth.module.scss";
 
 const initialState = {
   oldPassword: "",
@@ -37,38 +38,47 @@ const ChangePassword = () => {
     navigate("/profile");
   };
   return (
-    <div className="change-password">
-      <Card cardClass={"password-card"}>
-        <h3>Change Password</h3>
-        <form onSubmit={changePass} className="form-control">
-          <input
-            type="password"
-            name="oldPassword"
-            value={oldPassword}
-            placeholder="Old Password"
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            value={password}
-            placeholder="New Password"
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="password"
-            name="password2"
-            value={password2}
-            placeholder="Confirm Password"
-            onChange={handleInputChange}
-            required
-          />
-          <button className="--btn --btn-primary" type="submit">
-            Change Password
-          </button>
-        </form>
+    <div className={`container ${styles.auth}`}>
+      <Card>
+        <div className={styles.form}>
+          <div className="--flex-center">
+            <MdPassword size={35} color="#999" />
+          </div>
+          <h2>Change Password</h2>
+          <form onSubmit={changePass} className="form-control">
+            <input
+              type="password"
+              name="oldPassword"
+              value={oldPassword}
+              placeholder="Old Password"
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="password"
+              name="password"
+              value={password}
+              placeholder="New Password"
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="password"
+              name="password2"
+              value={password2}
+              placeholder="Confirm Password"
+              onChange={handleInputChange}
+              required
+            />
+            <button
+              type="submit"
+              className="--btn --btn-primary --btn-block"
+              style={{ marginBottom: "1rem" }}
+            >
+              Change Password
+            </button>
+          </form>
+        </div>
       </Card>
     </div>
   );
