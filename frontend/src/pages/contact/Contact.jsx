@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaPhoneAlt, FaEnvelope, FaTwitter } from "react-icons/fa";
 import { GoLocation } from "react-icons/go";
@@ -8,6 +9,7 @@ import { BACKEND_URL } from "../../services/authService";
 import "./Contact.scss";
 
 const Contact = () => {
+  const navigate = useNavigate();
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const data = {
@@ -18,10 +20,11 @@ const Contact = () => {
   const sendEmail = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${BACKEND_URL}/api/contactus`, data);
+      const response = await axios.post(`${BACKEND_URL}/api/contact_us`, data);
       setSubject("");
       setMessage("");
       toast.success(response.data.message);
+      navigate("/dashboard");
     } catch (error) {
       toast.error(error.message);
     }
