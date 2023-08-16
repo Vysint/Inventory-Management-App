@@ -1,10 +1,12 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const verifyToken = require("../utils/jwt");
 const Token = require("../models/tokenModel");
 const { sendEmail } = require("../utils/sendEmail");
+const { response } = require("express");
 
 // @desc   Register a new user
 // route   POST /api/users/register
@@ -233,10 +235,12 @@ exports.forgotPassword = async (req, res, next) => {
   try {
     const user = await User.findOne({ email });
     if (user) {
-      // Delete token if it exists in the DB
-      let token = await Token.findOne({ userId: user._id });
+      // Delete token if it exists in the database
       try {
-        if (token) await User.deleteOne();
+        let token = await Token.findOne({ userId: user._id });
+        if (token) {
+          await token.deleteOne();
+        }
       } catch (err) {
         res.status(400);
         throw new Error(err);
@@ -244,54 +248,55 @@ exports.forgotPassword = async (req, res, next) => {
 
       // Create a reset token
       let resetToken = crypto.randomBytes(32).toString("hex") + user._id;
-      console.log(resetToken);
 
-      //Hash token before saving to DB
+      // Hash token before saving to the database
       const hashedToken = crypto
         .createHash("sha256")
         .update(resetToken)
         .digest("hex");
 
-      // Save Token to the DB
+      // Save to the database
+
       await new Token({
         userId: user._id,
         token: hashedToken,
         createdAt: Date.now(),
-        expiresAt: Date.now() + 30 * (60 * 1000), // 30 mins
+        expiresAt: Date.now() + 30 * (60 * 1000), //30 minutes
       }).save();
 
-      // Construct Reset Url
+      // Construct the Reset Url
+
       const resetUrl = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
 
       // Reset Password Email
       const message = `
       <h2>Hello ${user.name}</h2>
-      <p>You requested for a password reset</p>
+      <p>You requested for a password reset</p>   
       <p>Please use the link below to reset your password</p>
-      <p>This reset link if valid for only 30 minutes</p>
-
+      <p>This reset link is valid for only 30 minutes</p>
       <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
 
       <p>Regards</p>
 
-      <p>Pinvent Team</p>
-      `;
+      <p>Team</p>
+         `;
 
-      // Email Options
+      //  Email Options
+
       const subject = "Password Reset Request";
       const send_to = user.email;
       const sent_from = process.env.EMAIL_USER;
 
       try {
         await sendEmail(subject, message, send_to, sent_from);
-        res.status(200).json({ success: true, message: "Reset email sent" });
+        res.status(200).json({ success: true, message: "Reset Email sent" });
       } catch (err) {
-        res.status(500);
+        res.status(400);
         throw new Error("Email not sent, please try again");
       }
     } else {
-      res.status(404);
-      throw new Error("User does not exist");
+      res.status(400);
+      throw new Error("User not found");
     }
   } catch (err) {
     return next(err);
