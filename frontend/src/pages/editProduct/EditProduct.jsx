@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import Loader from "../../components/loader/Loader";
+import ProductForm from "../../components/product/productForm/ProductForm";
 import {
   getProduct,
   getProducts,
+  selectProduct,
   updateProduct,
 } from "../../redux/features/product/productSlice";
-import ProductForm from "../../components/product/productForm/ProductForm";
-import Loader from "../../components/loader/Loader";
-import { toast } from "react-toastify";
 
 const EditProduct = () => {
   const { id } = useParams();
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const { isLoading } = useSelector((state) => state.product);
-  const productEdit = useSelector((state) => state.product.product);
+
+  const productEdit = useSelector(selectProduct);
 
   const [product, setProduct] = useState(productEdit);
   const [productImage, setProductImage] = useState("");
@@ -27,18 +28,21 @@ const EditProduct = () => {
     dispatch(getProduct(id));
   }, [dispatch, id]);
 
-useEffect(() => {
+  useEffect(() => {
     setProduct(productEdit);
+
     setImagePreview(
-      productEdit && productEdit.image.filePath ? `${productEdit.image.filePath}` : null
+      productEdit && productEdit.image ? `${productEdit.image.filePath}` : null
     );
+
     setDescription(
       productEdit && productEdit.description ? productEdit.description : ""
     );
   }, [productEdit]);
 
   const handleInputChange = (e) => {
-    setProduct((product) => ({ ...product, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setProduct({ ...product, [name]: value });
   };
 
   const handleImageChange = (e) => {
@@ -50,6 +54,7 @@ useEffect(() => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("name", product?.name);
+
     formData.append("category", product?.category);
     formData.append("quantity", product?.quantity);
     formData.append("price", product?.price);
@@ -57,13 +62,13 @@ useEffect(() => {
     if (productImage) {
       formData.append("image", productImage);
     }
-
     await dispatch(updateProduct({ id, formData }));
     await dispatch(getProducts());
     navigate("/dashboard");
   };
+
   return (
-    <>
+    <div>
       {isLoading && <Loader />}
       <h3 className="--mt">Edit Product</h3>
       <ProductForm
@@ -76,7 +81,7 @@ useEffect(() => {
         handleImageChange={handleImageChange}
         saveProduct={saveProduct}
       />
-    </>
+    </div>
   );
 };
 
