@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MdPassword } from "react-icons/md";
 import Card from "../../components/card/Card";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { resetPassword } from "../../services/authService";
 import styles from "./auth.module.scss";
@@ -11,6 +11,7 @@ const initialState = {
   password2: "",
 };
 const Reset = () => {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState(initialState);
   const { password, password2 } = userData;
   const { resetToken } = useParams();
@@ -39,6 +40,7 @@ const Reset = () => {
     try {
       const data = await resetPassword(userInfo, resetToken);
       toast.success(data.message);
+      navigate("/login");
     } catch (err) {
       toast.error(err.message);
     }
