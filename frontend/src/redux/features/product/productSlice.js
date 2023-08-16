@@ -232,4 +232,6 @@ const productSlice = createSlice({
 export const { CALC_STORE_VALUE, CALC_OUT_OF_STOCK, CALC_CATEGORY } =
   productSlice.actions;
 
+export const selectProduct = (state) => state.product.product;
+
 export default productSlice.reducer;
