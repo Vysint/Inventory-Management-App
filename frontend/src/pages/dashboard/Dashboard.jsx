@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { getProducts } from "../../redux/features/product/productSlice";
 import ProductList from "../../components/product/productList/ProductList";
 import ProductSummary from "../../components/product/productSummary/ProductSummary";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
   useRedirect("/login");
@@ -18,7 +19,8 @@ const Dashboard = () => {
       dispatch(getProducts());
     }
     if (isError) {
-      console.log(message);
+      toast.error(message);
+      // console.log(message);
     }
   }, [isLoggedIn, isError, message, dispatch]);
   return (
