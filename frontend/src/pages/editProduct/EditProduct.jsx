@@ -30,7 +30,7 @@ const EditProduct = () => {
 useEffect(() => {
     setProduct(productEdit);
     setImagePreview(
-      productEdit && productEdit.image ? `${productEdit.image}` : null
+      productEdit && productEdit.image.filePath ? `${productEdit.image.filePath}` : null
     );
     setDescription(
       productEdit && productEdit.description ? productEdit.description : ""
