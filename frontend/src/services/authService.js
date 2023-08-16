@@ -120,7 +120,7 @@ export const getUserProfile = async () => {
     (err.response && err.response.data && err.response.data.message) ||
       err.message ||
       err.toString();
-    toast.error(message);
+    toast.error(err.message);
   }
 };
 
