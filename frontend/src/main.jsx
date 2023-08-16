@@ -23,6 +23,7 @@ import EditProduct from "./pages/editProduct/EditProduct.jsx";
 import Profile from "./pages/profile/Profile.jsx";
 import EditProfile from "./pages/profile/EditProfile.jsx";
 import Contact from "./pages/contact/Contact.jsx";
+import ChangePassword from "./components/changePassword/ChangePassword.jsx";
 import "./index.css";
 
 const router = createBrowserRouter(
@@ -33,6 +34,7 @@ const router = createBrowserRouter(
       <Route path="/register" element={<Register />} />
       <Route path="/forgotpassword" element={<Forgot />} />
       <Route path="/resetpassword/:resetToken" element={<Reset />} />
+      <Route path="changePassword" element={<ChangePassword />} />
       <Route
         path="/dashboard"
         element={
@@ -98,7 +100,7 @@ const router = createBrowserRouter(
         element={
           <Sidebar>
             <Layout>
-              <Contact/>
+              <Contact />
             </Layout>
           </Sidebar>
         }
