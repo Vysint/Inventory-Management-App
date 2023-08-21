@@ -14,3 +14,34 @@ It includes the following:
 
 # Usage
 * Create a MongoDB database and obtain your `MongoDB URI`-[MongoDB Atlas](https://www.mongodb.com/atlas/database)
+
+## Env variables
+Rename the `.env.example` file to `.env.` and add the following
+```
+NODE_ENV=development
+PORT=8000
+MONGO_URI=your mongodb uri
+JWT_SECRET=your jwt secret
+```
+Change the `JWT_SECRET` to whatever you want
+
+#### Install Dependencies (frontend and backend)
+```
+cd frontend
+npm install --save
+```
+#### Run
+```
+#Run frontend(:3000) 
+npm run dev
+
+#Run backend(:8000)
+npm start / npm run server
+```
+
+# Build and Deploy
+```
+#Create frontend production build
+cd frontend
+npm run build
+```
