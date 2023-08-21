@@ -1,7 +1,7 @@
 # A Mern Inventory-Management-App
 This is a MERN stack application with authentication.This is for a SPA (Single Page Application) workflow that uses the [Vite](https://vitejs.dev/guide/) Build tool.
 
-![inventory](https://github.com/Vysint/Inventory-Management-App/assets/109030133/aa770aeb-1ae4-4978-ba21-0454bfe8dca6)
+![inventory](https://github.com/Vysint/Inventory-Management-App/assets/109030133/9799455c-6744-4798-aff9-a7c649c997bd)
 
 It includes the following:
 * Backend API with Express and MongoDB
