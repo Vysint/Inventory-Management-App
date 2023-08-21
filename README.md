@@ -11,3 +11,6 @@ It includes the following:
 * Custom middleware to check JSON web token and store in cookie
 * Custom error middleware
 * React frontend to login, logout, register/signup, profile, updateprofile, products and updateproducts
+
+# Usage
+***
