@@ -13,5 +13,4 @@ It includes the following:
 * React frontend to login, logout, register/signup, profile, updateprofile, products and updateproducts
 
 # Usage
----
 * Create a MongoDB database and obtain your `MongoDB URI`-[MongoDB Atlas](https://www.mongodb.com/atlas/database)
